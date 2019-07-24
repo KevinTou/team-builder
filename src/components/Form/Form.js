@@ -1,29 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const Form = ({ list, user, setUser, setList }) => {
+const Form = ({ list, setList, memberToEdit, setMemberToEdit, editMember }) => {
+  const [member, setMember] = useState({ name: "", email: "", role: "" });
+
+  useEffect(() => {
+    if (memberToEdit) {
+      setMember(memberToEdit);
+    }
+  }, [memberToEdit]);
+
   const handleChange = event => {
-    const updatedUser = { ...user, [event.target.name]: event.target.value };
-    setUser(updatedUser);
+    const updatedMember = {
+      ...member,
+      [event.target.name]: event.target.value
+    };
+    setMember(updatedMember);
   };
 
   const handleSubmit = event => {
     event.preventDefault();
-    if (user.name !== "" && user.email !== "" && user.role !== "") {
-      setList([...list, user]);
+    if (memberToEdit) {
+      editMember(member);
+      setMemberToEdit(null);
+    } else if (
+      member.name !== "" &&
+      member.email !== "" &&
+      member.role !== ""
+    ) {
+      setList([...list, member]);
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <fieldset>
-        <legend>Add a User</legend>
+        <legend>Add a Member</legend>
         <label htmlFor="name">
           Name:{" "}
           <input
             type="text"
             name="name"
             placeholder="Enter name"
-            value={user.name}
+            value={member.name}
             onChange={handleChange}
           />
         </label>
@@ -34,34 +52,32 @@ const Form = ({ list, user, setUser, setList }) => {
             type="email"
             name="email"
             placeholder="Enter e-mail"
-            value={user.email}
+            value={member.email}
             onChange={handleChange}
           />
         </label>
 
         <label htmlFor="role">
           Choose a role:{" "}
-          <select id="role" name="role" onChange={handleChange}>
-            <option value="">--Please choose an option--</option>
-            <option value="Web UI Developer">Web UI Developer</option>
-            <option value="Front End Developer">Front End Developer</option>
-            <option value="Front End Framework Developer">
-              Front End Framework Developer
-            </option>
-            <option value="Backend Developer - Node">
-              Backend Developer - Node
-            </option>
-            <option value="Backend Developer - Java">
-              Backend Developer - Java
-            </option>
-            <option value="iOS Developer I">iOS Developer I</option>
-            <option value="iOS Developer II">iOS Developer II</option>
-            <option value="Data Engineer">Data Engineer</option>
-            <option value="Machine Learning Engineer">
-              Machine Learning Engineer
-            </option>
-            <option value="UX Designer">UX Designer</option>
-          </select>
+          <input
+            list="role"
+            name="role"
+            placeholder="Choose a role"
+            value={member.role}
+            onChange={handleChange}
+          />
+          <datalist id="role">
+            <option value="Web UI Developer" />
+            <option value="Front End Developer" />
+            <option value="Front End Framework Developer" />
+            <option value="Backend Developer - Node" />
+            <option value="Backend Developer - Java" />
+            <option value="iOS Developer I" />
+            <option value="iOS Developer II" />
+            <option value="Data Engineer" />
+            <option value="Machine Learning Engineer" />
+            <option value="UX Designer" />
+          </datalist>
         </label>
         <input type="submit" value="Submit" />
       </fieldset>

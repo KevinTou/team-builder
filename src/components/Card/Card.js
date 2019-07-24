@@ -1,6 +1,6 @@
 import React from "react";
 
-const Card = ({ user, editMember }) => {
+const Card = ({ user, setMemberToEdit }) => {
   return (
     <div>
       <h1>{user.name}</h1>
@@ -10,7 +10,7 @@ const Card = ({ user, editMember }) => {
       <p>
         <strong>Role:</strong> {user.role}
       </p>
-      <button onClick={() => editMember(user)}>Edit</button>
+      <button onClick={() => setMemberToEdit(user)}>Edit</button>
     </div>
   );
 };

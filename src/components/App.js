@@ -6,18 +6,33 @@ import Card from "./Card/Card";
 
 const App = () => {
   const [list, setList] = useState([]);
-  const [user, setUser] = useState({ name: "", email: "", role: "" });
-  const [memberToEdit, setMemberToEdit] = useState({});
+  const [memberToEdit, setMemberToEdit] = useState(null);
 
   const editMember = member => {
-    setMemberToEdit(member);
+    setList(
+      list.map((user, index) => {
+        if (user.name === member.name) {
+          return member;
+        } else {
+          return user;
+        }
+      })
+    );
   };
 
   return (
     <div>
-      <Form list={list} setList={setList} user={user} setUser={setUser} />
+      <Form
+        list={list}
+        setList={setList}
+        memberToEdit={memberToEdit}
+        setMemberToEdit={setMemberToEdit}
+        editMember={editMember}
+      />
       {list.map((user, index) => {
-        return <Card key={index} user={user} editMember={editMember} />;
+        return (
+          <Card key={index} user={user} setMemberToEdit={setMemberToEdit} />
+        );
       })}
     </div>
   );
