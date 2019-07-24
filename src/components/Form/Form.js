@@ -29,6 +29,7 @@ const Form = ({ list, setList, memberToEdit, setMemberToEdit, editMember }) => {
     ) {
       setList([...list, member]);
     }
+    setMember({ name: "", email: "", role: "" });
   };
 
   return (
