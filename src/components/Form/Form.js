@@ -35,7 +35,7 @@ const Form = ({ list, setList, memberToEdit, setMemberToEdit, editMember }) => {
   return (
     <form onSubmit={handleSubmit}>
       <fieldset>
-        <legend>Add a Member</legend>
+        <legend>{memberToEdit ? "Edit a Member" : "Add a Member"}</legend>
         <label htmlFor="name">
           Name:{" "}
           <input
