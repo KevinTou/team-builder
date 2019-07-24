@@ -9,9 +9,10 @@ const App = () => {
   const [memberToEdit, setMemberToEdit] = useState(null);
 
   const editMember = member => {
+    const editIndex = list.indexOf(memberToEdit);
     setList(
       list.map((user, index) => {
-        if (user.name === member.name) {
+        if (index === editIndex) {
           return member;
         } else {
           return user;
