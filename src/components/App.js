@@ -4,21 +4,16 @@ import "./App.css";
 import Form from "./Form/Form";
 import Card from "./Card/Card";
 
+import { listOfPeople } from "../data";
+
 const App = () => {
-  const [list, setList] = useState([]);
+  const [list, setList] = useState([...listOfPeople]);
   const [memberToEdit, setMemberToEdit] = useState(null);
 
   const editMember = member => {
     const editIndex = list.indexOf(memberToEdit);
-    setList(
-      list.map((user, index) => {
-        if (index === editIndex) {
-          return member;
-        } else {
-          return user;
-        }
-      })
-    );
+    // Updates the list with the newly edited object
+    setList(list.map((user, index) => (index === editIndex ? member : user)));
   };
 
   return (

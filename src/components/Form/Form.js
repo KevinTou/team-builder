@@ -4,6 +4,10 @@ const Form = ({ list, setList, memberToEdit, setMemberToEdit, editMember }) => {
   const [member, setMember] = useState({ name: "", email: "", role: "" });
 
   useEffect(() => {
+    /*
+      Updates the inputs and populates it with the member data,
+      after the edit button is clicked
+    */
     if (memberToEdit) {
       setMember(memberToEdit);
     }
@@ -19,16 +23,21 @@ const Form = ({ list, setList, memberToEdit, setMemberToEdit, editMember }) => {
 
   const handleSubmit = event => {
     event.preventDefault();
+    // If editing, replace with edited object
+    // and resets the editing state
     if (memberToEdit) {
       editMember(member);
       setMemberToEdit(null);
     } else if (
+      // Checks to see if the inputs are empty before
+      // adding the object to the list
       member.name !== "" &&
       member.email !== "" &&
       member.role !== ""
     ) {
       setList([...list, member]);
     }
+    // "Clears" the input fields after submission
     setMember({ name: "", email: "", role: "" });
   };
 
